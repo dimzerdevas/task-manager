@@ -1,10 +1,10 @@
-import { Header } from "../../Header"
+import { TaskList } from "./components"
 
 export const TaskManagerView = (): JSX.Element => {
     return (<>
         <h1>
             Task Manager
+            <TaskList />
         </h1>
-        <Header />
     </>)
 }
