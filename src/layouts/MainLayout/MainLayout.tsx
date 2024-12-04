@@ -1,32 +1,42 @@
-import { DashboardLayout, AppProvider as ToolpadProvider, type NavigationItem } from "@toolpad/core"
-import { theme } from "../../theme"
+import { DashboardLayout, Router, AppProvider as ToolpadProvider, type NavigationItem } from "@toolpad/core"
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import HomeIcon from '@mui/icons-material/Home';
+import { useState, useMemo } from "react";
 
-const navigation: NavigationItem[] = [
+const NAVIGATION: NavigationItem[] = [
   {
     segment: '',
     title: 'Home',
     icon: <HomeIcon />,
-    pattern: '/'
   },
   {
     segment: 'task-manager',
     title: 'Task Manager',
     icon: <AssignmentIcon />,
-    pattern: '/task-manager'
   },
 ]
 
 export const MainLayout = (): JSX.Element => {
+  const [dashboardPathname, setDashboardPathname] = useState('/');
+  const routeNavigate = useNavigate();
+
+  const router = useMemo<Router>(() => ({
+    pathname: dashboardPathname,
+    searchParams: new URLSearchParams(),
+    navigate: path => {
+      setDashboardPathname(String(path));
+      routeNavigate(path);
+    }
+  }), [dashboardPathname, routeNavigate])
+
   return (
     <ToolpadProvider
-      navigation={navigation}
+      navigation={NAVIGATION}
+      router={router}
       branding={{
         title: 'Task Manager App'
       }}
-      theme={theme}
     >
       <DashboardLayout>
         <Outlet />
