@@ -1,18 +1,18 @@
 import styled from "styled-components"
 
-export const NavbarContainer = styled.div`
+export const UserDetailsContainer = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 15px 0;
 `
 
-export const NavLeftSide = styled.div`
+export const LeftSide = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 0 10px 0 15px;
 `
-export const NavRightSide = styled.div`
+export const RightSide = styled.div`
     display: flex;
     justify-content: space-around;
     font-size: 13px;
@@ -23,9 +23,9 @@ export const WelcomeMessage = styled.span`
     font-style: italic;
     margin-right: 10px;
 `
-
 export const ProfilePicture = styled.img`
-    width: 35px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
 `
 export const LoggedMessage = styled.p`

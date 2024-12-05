@@ -5,8 +5,8 @@ import { routes } from "./routes";
 import { PageTitleWrapper } from "./hocs";
 import { MainLayout } from "./layouts";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Navbar } from "./components/Navbar";
-import { HomepageView } from "./views/HomepageView";
+import { UserDetails } from "./components/UserDetails";
+import { LoginView } from "./views/LoginView";
 
 export const AppRouter = (): JSX.Element => {
     const { logout } = useAuth0();
@@ -30,12 +30,12 @@ export const AppRouter = (): JSX.Element => {
                                 element={
                                     isAuthenticated ? (
                                         <Suspense fallback={<Loader />}>
-                                            <Navbar user={user} logout={logoutUser} />
+                                            <UserDetails user={user} logout={logoutUser} />
                                             <PageTitleWrapper title={pageTitle}>
                                                 <Component />
                                             </PageTitleWrapper>
                                         </Suspense>) : (
-                                        <HomepageView />
+                                        <LoginView />
                                     )
                                 }
                             />
