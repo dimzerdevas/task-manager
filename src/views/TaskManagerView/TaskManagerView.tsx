@@ -1,9 +1,13 @@
-import { TextField, List, IconButton } from "@mui/material";
+import { TextField, List, IconButton, Button } from "@mui/material";
 import { TaskItem } from "./components";
 import { AddTaskContainer, Container } from "./style";
 import { AddCircleOutline } from "@mui/icons-material";
 import { useTaskManager } from "../../context";
 import { TaskFilter } from "./components/TaskFilter";
+import { useChuckNorrisJoke } from "./queries";
+import { Loader } from "../../components";
+import { useSnackbar } from "notistack";
+import { useEffect } from "react";
 
 export const TaskManagerView = () => {
   const {
@@ -19,8 +23,33 @@ export const TaskManagerView = () => {
     setFilter,
   } = useTaskManager();
 
+  const {
+    chuckNorrisJoke,
+    isLoadingChuckNorrisJoke,
+    refetchChuckNorrisJoke,
+    isErrorChuckNorrisJoke,
+  } = useChuckNorrisJoke();
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    if (chuckNorrisJoke) {
+      enqueueSnackbar(chuckNorrisJoke, {
+        variant: "success",
+        autoHideDuration: 5000,
+        anchorOrigin: { vertical: "bottom", horizontal: "right" },
+      });
+    } else if (isErrorChuckNorrisJoke) {
+      enqueueSnackbar("Error while fetching Chuck Norris joke", {
+        variant: "error",
+        autoHideDuration: 5000,
+        anchorOrigin: { vertical: "bottom", horizontal: "right" },
+      });
+    }
+  }, [chuckNorrisJoke, enqueueSnackbar, isErrorChuckNorrisJoke]);
+
   return (
     <Container>
+      {isLoadingChuckNorrisJoke && <Loader />}
       <AddTaskContainer>
         <TaskFilter filter={filter} setFilter={setFilter} />
         <TextField
@@ -35,6 +64,7 @@ export const TaskManagerView = () => {
           <AddCircleOutline />
         </IconButton>
       </AddTaskContainer>
+      <Button onClick={() => refetchChuckNorrisJoke()}>Bored?</Button>
       <List>
         {tasks.map(({ isEditing, text, id, completed }) => (
           <TaskItem
