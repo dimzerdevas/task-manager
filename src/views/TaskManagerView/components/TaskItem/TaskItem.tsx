@@ -1,0 +1,1 @@
+export const TaskItem = ({text}: {text: string}) : JSX.Element => <div>{text}</div>
