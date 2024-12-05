@@ -2,7 +2,7 @@ import { TextField, List, IconButton } from "@mui/material";
 import { TaskItem } from "./components";
 import { AddTaskContainer, Container } from "./style";
 import { AddCircleOutline } from "@mui/icons-material";
-import { useTaskManager } from "./hooks";
+import { useTaskManager } from "../../context";
 
 export const TaskManagerView = () => {
   const {
