@@ -1,24 +1,51 @@
-import { useState } from "react";
-import { TaskList } from "./components"
-import { Button } from "@mui/material";
-import { Task } from "./interfaces";
+import { TextField, List, IconButton } from "@mui/material";
+import { TaskItem } from "./components";
+import { AddTaskContainer, Container } from "./style";
+import { AddCircleOutline } from "@mui/icons-material";
+import { useTaskManager } from "./hooks";
 
-export const TaskManagerView = (): JSX.Element => {
-    const [task, setTask] = useState<Task | null>(null);
-    const [todoList, setTodoList] = useState<Task[]>([] as Task[])
-    const handleTaskAddition = () => {
-        if (task) {
-            setTodoList([...todoList, task]);
-        }
-    }
-    return (<>
-        <h1>
-            <input type="text" onChange={(e) => setTask({ id: todoList.length, description: e.target.value, status: false })} />
-            <Button variant="contained" color="primary" onClick={() => handleTaskAddition()}>
-                Add Task
-            </Button>
-            Task Manager
-            <TaskList tasks={todoList} />
-        </h1>
-    </>)
-}
+export const TaskManagerView = () => {
+  const {
+    tasks,
+    newTask,
+    setNewTask,
+    addTask,
+    deleteTask,
+    editTask,
+    toggleEdit,
+    toggleComplete,
+  } = useTaskManager();
+
+  return (
+    <Container>
+      <AddTaskContainer>
+        <TextField
+          label="Add a new task"
+          variant="outlined"
+          fullWidth
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+          margin="normal"
+        />
+        <IconButton onClick={addTask}>
+          <AddCircleOutline />
+        </IconButton>
+      </AddTaskContainer>
+      <List>
+        {tasks.map(({ isEditing, text, id, completed }) => (
+          <TaskItem
+            editTask={editTask}
+            toggleEdit={toggleEdit}
+            deleteTask={deleteTask}
+            toggleComplete={toggleComplete}
+            isEditing={isEditing}
+            text={text}
+            completed={completed}
+            key={id}
+            id={id}
+          />
+        ))}
+      </List>
+    </Container>
+  );
+};
