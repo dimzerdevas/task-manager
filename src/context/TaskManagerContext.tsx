@@ -14,6 +14,8 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState("");
+  const [filter, setFilter] = useState<"all" | "done" | "pending">("all");
+  const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem("tasks") ?? "[]");
@@ -25,6 +27,20 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  useEffect(() => {
+    switch (filter) {
+      case "done":
+        setFilteredTasks(tasks.filter((task) => task.completed));
+        break;
+      case "pending":
+        setFilteredTasks(tasks.filter((task) => !task.completed));
+        break;
+      default:
+        setFilteredTasks(tasks);
+        break;
+    }
+  }, [filter, tasks]);
 
   const addTask = () => {
     if (newTask === "") return;
@@ -62,6 +78,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
       )
     );
   };
+
   return (
     <TaskContext.Provider
       value={{
@@ -70,9 +87,11 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
         deleteTask,
         toggleEdit,
         toggleComplete,
-        tasks,
+        tasks: filteredTasks,
         newTask,
         setNewTask,
+        filter,
+        setFilter,
       }}
     >
       {children}

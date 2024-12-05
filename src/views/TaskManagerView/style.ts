@@ -7,5 +7,5 @@ export const Container = styled.div`
 
 export const AddTaskContainer = styled.div`
     display: flex;
-    align-items: center;
+    align-items: baseline;
 ` 

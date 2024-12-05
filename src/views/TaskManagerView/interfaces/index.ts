@@ -14,4 +14,6 @@ export interface TaskContextType {
     toggleEdit: (id: number) => void;
     newTask: string;
     setNewTask: (text: string) => void;
+    filter: string;
+    setFilter: (filter: 'all' | 'done' | 'pending') => void;
 }

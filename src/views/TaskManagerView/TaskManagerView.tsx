@@ -3,6 +3,7 @@ import { TaskItem } from "./components";
 import { AddTaskContainer, Container } from "./style";
 import { AddCircleOutline } from "@mui/icons-material";
 import { useTaskManager } from "../../context";
+import { TaskFilter } from "./components/TaskFilter";
 
 export const TaskManagerView = () => {
   const {
@@ -14,11 +15,14 @@ export const TaskManagerView = () => {
     editTask,
     toggleEdit,
     toggleComplete,
+    filter,
+    setFilter,
   } = useTaskManager();
 
   return (
     <Container>
       <AddTaskContainer>
+        <TaskFilter filter={filter} setFilter={setFilter} />
         <TextField
           label="Add a new task"
           variant="outlined"
