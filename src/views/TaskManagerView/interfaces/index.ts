@@ -16,4 +16,5 @@ export interface TaskContextType {
     setNewTask: (text: string) => void;
     filter: string;
     setFilter: (filter: 'all' | 'done' | 'pending') => void;
+    setTasks: (tasks: Task[]) => void;
 }

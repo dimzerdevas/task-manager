@@ -92,6 +92,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
         setNewTask,
         filter,
         setFilter,
+        setTasks,
       }}
     >
       {children}
