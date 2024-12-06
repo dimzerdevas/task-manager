@@ -2,8 +2,18 @@ import { AppRouter } from "./AppRouter";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { TaskProvider } from "./context";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SnackbarProvider } from "notistack";
 
 export const App = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 0,
+      },
+    },
+  });
+
   return (
     <ThemeProvider>
       <Auth0Provider
@@ -15,9 +25,13 @@ export const App = () => {
         useRefreshTokens={true}
         cacheLocation="localstorage"
       >
-        <TaskProvider>
-          <AppRouter />
-        </TaskProvider>
+        <QueryClientProvider client={queryClient}>
+          <SnackbarProvider>
+            <TaskProvider>
+              <AppRouter />
+            </TaskProvider>
+          </SnackbarProvider>
+        </QueryClientProvider>
       </Auth0Provider>
     </ThemeProvider>
   );

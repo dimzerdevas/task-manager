@@ -43,7 +43,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   }, [filter, tasks]);
 
   const addTask = () => {
-    if (newTask === "") return;
+    if (newTask.trim() === "") return;
     setTasks([
       ...tasks,
       { id: Date.now(), text: newTask, isEditing: false, completed: false },

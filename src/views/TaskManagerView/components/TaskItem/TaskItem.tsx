@@ -31,6 +31,7 @@ export const TaskItem = ({
     {isEditing ? (
       <TextField
         value={text}
+        data-testId={`edit-field-${text}`}
         onChange={(e) => editTask(id, e.target.value)}
         fullWidth
       />
