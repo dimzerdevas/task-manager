@@ -1,10 +1,12 @@
-import { Header } from "../../Header"
+import { Card, CardContent } from "@mui/material";
 
 export const HomepageView = (): JSX.Element => {
-    return <>
-        <h1>
-            Homepage
-        </h1>
-        <Header />
-    </>
+
+    return (
+        <Card>
+            <CardContent>
+                <h2>Welcome to the Task Manager App!</h2>
+            </CardContent>
+        </Card>
+    );
 }
