@@ -8,7 +8,7 @@ import {
   RightSide,
   ProfilePicture,
   WelcomeMessage,
-} from "./styles";
+} from "./style";
 // import { useThemeContext } from "../../context/ThemeContext";
 import { ModeNight, LightMode } from "@mui/icons-material";
 import { useThemeContext } from "../../context/ThemeContext";

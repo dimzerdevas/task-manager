@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import { LoaderContainer, LoadingMessage } from "./styles";
+import { LoaderContainer, LoadingMessage } from "./style";
 
 export const Loader = () => {
   return (
