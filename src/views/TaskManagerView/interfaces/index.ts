@@ -14,7 +14,12 @@ export interface TaskContextType {
     toggleEdit: (id: number) => void;
     newTask: string;
     setNewTask: (text: string) => void;
-    filter: string;
+    filter: 'all' | 'done' | 'pending';
     setFilter: (filter: 'all' | 'done' | 'pending') => void;
     setTasks: (tasks: Task[]) => void;
+    searchBy: 'description' | 'dueDate' | 'priority';
+    setSearchBy: (filter: 'description' | 'dueDate' | 'priority') => void;
+    searchValue: string;
+    setSearchValue: (value: string) => void;
+    handleSearch: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
 }
