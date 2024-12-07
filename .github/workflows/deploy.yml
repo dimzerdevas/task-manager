@@ -20,6 +20,11 @@ concurrency:
   group: 'pages'
   cancel-in-progress: true
 
+#Allow repo secrets
+env:
+  VITE_REACT_APP_DOMAIN: ${{ secrets.VITE_REACT_APP_DOMAIN }}
+  VITE_REACT_APP_CLIENT_ID: ${{ secrets.VITE_REACT_APP_CLIENT_ID }}
+
 jobs:
   # Single deploy job since we're just deploying
   deploy:
