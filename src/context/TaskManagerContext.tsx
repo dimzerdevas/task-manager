@@ -1,39 +1,44 @@
 import {
   createContext,
   useState,
-  useContext,
   ReactNode,
   useEffect,
-} from "react";
-import { Task, TaskContextType } from "../views/TaskManagerView/interfaces";
+  useContext,
+} from 'react';
+import { Task, TaskContextType } from '../views/TaskManagerView/interfaces';
 
-const TaskContext = createContext<TaskContextType | undefined>(undefined);
+export const TaskContext = createContext<TaskContextType | null>(null);
 
 export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [newTask, setNewTask] = useState("");
-  const [filter, setFilter] = useState<"all" | "done" | "pending">("all");
+  const [newTask, setNewTask] = useState('');
+  const [filter, setFilter] = useState<'all' | 'done' | 'pending'>('all');
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
+  const [searchedTasks, setSearchedTasks] = useState<Task[]>([]);
+  const [searchBy, setSearchBy] = useState<
+    'description' | 'dueDate' | 'priority'
+  >('description');
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
-    const storedTasks = JSON.parse(localStorage.getItem("tasks") ?? "[]");
+    const storedTasks = JSON.parse(localStorage.getItem('tasks') ?? '[]');
     if (storedTasks?.length) {
       setTasks(storedTasks);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
   useEffect(() => {
     switch (filter) {
-      case "done":
+      case 'done':
         setFilteredTasks(tasks.filter((task) => task.completed));
         break;
-      case "pending":
+      case 'pending':
         setFilteredTasks(tasks.filter((task) => !task.completed));
         break;
       default:
@@ -42,13 +47,27 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, [filter, tasks]);
 
+  useEffect(() => {
+    switch (searchBy) {
+      case 'description':
+        console.log('des');
+        break;
+      case 'dueDate':
+        console.log('date');
+        break;
+      case 'priority':
+        console.log('pri');
+        break;
+    }
+  }, [searchBy]);
+
   const addTask = () => {
-    if (newTask.trim() === "") return;
+    if (newTask.trim() === '') return;
     setTasks([
       ...tasks,
       { id: Date.now(), text: newTask, isEditing: false, completed: false },
     ]);
-    setNewTask("");
+    setNewTask('');
   };
 
   const deleteTask = (id: number) => {
@@ -58,25 +77,34 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   const editTask = (id: number, newText: string) => {
     setTasks(
       tasks.map((task) =>
-        task.id === id ? { ...task, text: newText, isEditing: false } : task
-      )
+        task.id === id ? { ...task, text: newText, isEditing: false } : task,
+      ),
     );
   };
 
   const toggleEdit = (id: number) => {
     setTasks(
       tasks.map((task) =>
-        task.id === id ? { ...task, isEditing: !task.isEditing } : task
-      )
+        task.id === id ? { ...task, isEditing: !task.isEditing } : task,
+      ),
     );
   };
 
   const toggleComplete = (id: number) => {
     setTasks(
       tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
+        task.id === id ? { ...task, completed: !task.completed } : task,
+      ),
     );
+  };
+
+  const handleSearch = (searchValue: string) => {
+    const searchResults = filteredTasks.filter((task) => {
+      const { text } = task;
+      return text.includes(searchValue);
+    });
+
+    setSearchedTasks(searchResults);
   };
 
   return (
@@ -87,11 +115,16 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
         deleteTask,
         toggleEdit,
         toggleComplete,
-        tasks: filteredTasks,
+        tasks: !isSearching ? filteredTasks : searchedTasks,
         newTask,
         setNewTask,
         filter,
         setFilter,
+        setTasks,
+        searchBy,
+        setSearchBy,
+        handleSearch,
+        setIsSearching,
       }}
     >
       {children}
@@ -99,10 +132,12 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-export const useTaskManager = () => {
+export const useTaskContext = (): TaskContextType => {
   const context = useContext(TaskContext);
+
   if (!context) {
-    throw new Error("useTasks must be used within a TaskProvider");
+    throw new Error('useTaskContext must be used within a Task Provider');
   }
+
   return context;
 };

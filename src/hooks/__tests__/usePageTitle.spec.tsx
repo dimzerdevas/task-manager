@@ -1,11 +1,11 @@
-import { renderHook } from "@testing-library/react";
-import { usePageTitle } from "../usePageTitle";
+import { renderHook } from '@testing-library/react';
+import { usePageTitle } from '../usePageTitle';
 
-describe("usePageTitle", () => {
-  it("render the title given", () => {
-    const testTitle = "Test Title";
+describe('usePageTitle', () => {
+  it('render the title given', () => {
+    const testTitle = 'Test Title';
 
     renderHook(() => usePageTitle(testTitle));
-    expect(document.title).toBe("Test Title");
+    expect(document.title).toBe('Test Title');
   });
 });

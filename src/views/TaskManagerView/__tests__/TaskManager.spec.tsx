@@ -5,29 +5,29 @@ import {
   screen,
   waitFor,
   within,
-} from "@testing-library/react";
-import { TaskManagerView } from "../TaskManagerView";
-import { Providers } from "../../../test-helpers/Providers";
-import { createServer, Registry, Response, Server } from "miragejs";
-import { AnyFactories, AnyModels } from "miragejs/-types";
+} from '@testing-library/react';
+import { TaskManagerView } from '../TaskManagerView';
+import { Providers } from '../../../test-helpers/Providers';
+import { createServer, Registry, Response, Server } from 'miragejs';
+import { AnyFactories, AnyModels } from 'miragejs/-types';
 // TODO: fix ts error
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import chuckNorrisResponseData from "./data/chuck-norris-data.json";
+import chuckNorrisResponseData from './data/chuck-norris-data.json';
 
-const chuckNorrisApiUrl = "https://api.chucknorris.io/jokes/random";
+const chuckNorrisApiUrl = 'https://api.chucknorris.io/jokes/random';
 
 const mockEnqueue = jest.fn();
 
-jest.mock("notistack", () => ({
-  ...jest.requireActual("notistack"),
+jest.mock('notistack', () => ({
+  ...jest.requireActual('notistack'),
   useSnackbar: () => {
     return {
       enqueueSnackbar: mockEnqueue,
     };
   },
 }));
-describe("TaskManagerView", () => {
+describe('TaskManagerView', () => {
   let mockServerInstance: Server<Registry<AnyModels, AnyFactories>> | null =
     null;
   beforeEach(() => {
@@ -46,50 +46,50 @@ describe("TaskManagerView", () => {
       mockServerInstance = null;
     }
   });
-  it("renders", () => {
+  it('renders', () => {
     render(
       <Providers>
         <TaskManagerView />
-      </Providers>
+      </Providers>,
     );
   });
 
-  it("does not add text task", () => {
+  it('does not add text task', () => {
     render(
       <Providers>
         <TaskManagerView />
-      </Providers>
+      </Providers>,
     );
 
-    const newTaskInput = screen.getByRole("textbox", {
+    const newTaskInput = screen.getByRole('textbox', {
       name: /add a new task/i,
     });
-    const addBtn = screen.getByTestId("AddCircleOutlineIcon");
+    const addBtn = screen.getByTestId('AddCircleOutlineIcon');
 
     fireEvent.change(newTaskInput, {
       target: {
-        value: " ",
+        value: ' ',
       },
     });
 
     fireEvent.click(addBtn);
-    expect(screen.queryByText(" ")).not.toBeInTheDocument();
+    expect(screen.queryByText(' ')).not.toBeInTheDocument();
   });
-  it("adds task successfully", () => {
+  it('adds task successfully', () => {
     render(
       <Providers>
         <TaskManagerView />
-      </Providers>
+      </Providers>,
     );
 
-    const newTaskInput = screen.getByRole("textbox", {
+    const newTaskInput = screen.getByRole('textbox', {
       name: /add a new task/i,
     });
-    const addBtn = screen.getByTestId("AddCircleOutlineIcon");
+    const addBtn = screen.getByTestId('AddCircleOutlineIcon');
 
     fireEvent.change(newTaskInput, {
       target: {
-        value: "something to do",
+        value: 'something to do',
       },
     });
 
@@ -98,24 +98,24 @@ describe("TaskManagerView", () => {
     expect(screen.getByText(/something to do/i)).toBeInTheDocument();
 
     // TODO: fix clean up
-    const deleteBtn = screen.getByTestId("DeleteIcon");
+    const deleteBtn = screen.getByTestId('DeleteIcon');
     fireEvent.click(deleteBtn);
   });
-  it("deletes task successfully", () => {
+  it('deletes task successfully', () => {
     render(
       <Providers>
         <TaskManagerView />
-      </Providers>
+      </Providers>,
     );
 
-    const newTaskInput = screen.getByRole("textbox", {
+    const newTaskInput = screen.getByRole('textbox', {
       name: /add a new task/i,
     });
-    const addBtn = screen.getByTestId("AddCircleOutlineIcon");
+    const addBtn = screen.getByTestId('AddCircleOutlineIcon');
 
     fireEvent.change(newTaskInput, {
       target: {
-        value: "something to do",
+        value: 'something to do',
       },
     });
 
@@ -123,66 +123,66 @@ describe("TaskManagerView", () => {
 
     expect(screen.getByText(/something to do/i)).toBeInTheDocument();
 
-    const deleteBtn = screen.getByTestId("DeleteIcon");
+    const deleteBtn = screen.getByTestId('DeleteIcon');
     fireEvent.click(deleteBtn);
 
     expect(screen.queryByText(/something to do/i)).not.toBeInTheDocument();
   });
-  it("edits task successfully", () => {
+  it('edits task successfully', () => {
     render(
       <Providers>
         <TaskManagerView />
-      </Providers>
+      </Providers>,
     );
 
-    const newTaskInput = screen.getByRole("textbox", {
+    const newTaskInput = screen.getByRole('textbox', {
       name: /add a new task/i,
     });
-    const addBtn = screen.getByTestId("AddCircleOutlineIcon");
+    const addBtn = screen.getByTestId('AddCircleOutlineIcon');
 
     fireEvent.change(newTaskInput, {
       target: {
-        value: "something to do",
+        value: 'something to do',
       },
     });
 
     fireEvent.click(addBtn);
     expect(screen.getByText(/something to do/i)).toBeInTheDocument();
 
-    const editBtn = screen.getByTestId("EditIcon");
+    const editBtn = screen.getByTestId('EditIcon');
     fireEvent.click(editBtn);
 
-    const saveBtn = screen.getByTestId("SaveIcon");
+    const saveBtn = screen.getByTestId('SaveIcon');
     expect(saveBtn).toBeInTheDocument();
 
-    const editTaskView = screen.getByTestId("edit-field-something to do");
-    const editTaskInput = within(editTaskView).getByRole("textbox");
+    const editTaskView = screen.getByTestId('edit-field-something to do');
+    const editTaskInput = within(editTaskView).getByRole('textbox');
     fireEvent.change(editTaskInput, {
-      target: { value: "something" },
+      target: { value: 'something' },
     });
 
     fireEvent.click(saveBtn);
     expect(screen.queryByText(/something to do/i)).not.toBeInTheDocument();
 
     // TODO: fix clean up
-    const deleteBtn = screen.getByTestId("DeleteIcon");
+    const deleteBtn = screen.getByTestId('DeleteIcon');
     fireEvent.click(deleteBtn);
   });
-  it("marks task as done successfully", async () => {
+  it('marks task as done successfully', async () => {
     render(
       <Providers>
         <TaskManagerView />
-      </Providers>
+      </Providers>,
     );
 
-    const newTaskInput = screen.getByRole("textbox", {
+    const newTaskInput = screen.getByRole('textbox', {
       name: /add a new task/i,
     });
-    const addBtn = screen.getByTestId("AddCircleOutlineIcon");
+    const addBtn = screen.getByTestId('AddCircleOutlineIcon');
 
     fireEvent.change(newTaskInput, {
       target: {
-        value: "something to do",
+        value: 'something to do',
       },
     });
 
@@ -190,13 +190,13 @@ describe("TaskManagerView", () => {
 
     expect(screen.getByText(/something to do/i)).toBeInTheDocument();
 
-    const checkbox = screen.getByRole("checkbox");
+    const checkbox = screen.getByRole('checkbox');
     fireEvent.click(checkbox);
 
-    const filterSelect = screen.getByRole("combobox");
+    const filterSelect = screen.getByRole('combobox');
     fireEvent.mouseDown(filterSelect);
 
-    const pendingOption = await screen.findByRole("option", {
+    const pendingOption = await screen.findByRole('option', {
       name: /pending/i,
     });
 
@@ -204,15 +204,14 @@ describe("TaskManagerView", () => {
     expect(screen.queryByText(/something to do/i)).not.toBeInTheDocument();
 
     fireEvent.mouseDown(filterSelect);
-    const doneOption = await screen.findByRole("option", {
+    const doneOption = await screen.findByRole('option', {
       name: /done/i,
     });
 
     fireEvent.click(doneOption);
     expect(screen.queryByText(/something to do/i)).toBeInTheDocument();
-
   });
-  it("renders a joke when bored button is clicked", async () => {
+  it('renders a joke when bored button is clicked', async () => {
     if (mockServerInstance) {
       mockServerInstance.get(chuckNorrisApiUrl, () => {
         return chuckNorrisResponseData;
@@ -222,9 +221,9 @@ describe("TaskManagerView", () => {
     render(
       <Providers>
         <TaskManagerView />
-      </Providers>
+      </Providers>,
     );
-    const boredBtn = screen.getByRole("button", {
+    const boredBtn = screen.getByRole('button', {
       name: /bored\?/i,
     });
 
@@ -232,13 +231,13 @@ describe("TaskManagerView", () => {
 
     await waitFor(() => {
       expect(mockEnqueue).toHaveBeenCalledWith(chuckNorrisResponseData.value, {
-        variant: "success",
+        variant: 'success',
         autoHideDuration: 5000,
-        anchorOrigin: { vertical: "bottom", horizontal: "right" },
+        anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
       });
     });
   });
-  it("renders an error notification when failing to fetch a joke", async () => {
+  it('renders an error notification when failing to fetch a joke', async () => {
     if (mockServerInstance) {
       mockServerInstance.get(chuckNorrisApiUrl, () => {
         return new Response(400, undefined, undefined);
@@ -248,9 +247,9 @@ describe("TaskManagerView", () => {
     render(
       <Providers>
         <TaskManagerView />
-      </Providers>
+      </Providers>,
     );
-    const boredBtn = screen.getByRole("button", {
+    const boredBtn = screen.getByRole('button', {
       name: /bored\?/i,
     });
 
@@ -258,12 +257,12 @@ describe("TaskManagerView", () => {
 
     await waitFor(() => {
       expect(mockEnqueue).toHaveBeenCalledWith(
-        "Error while fetching Chuck Norris joke",
+        'Error while fetching Chuck Norris joke',
         {
-          variant: "error",
+          variant: 'error',
           autoHideDuration: 5000,
-          anchorOrigin: { vertical: "bottom", horizontal: "right" },
-        }
+          anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
+        },
       );
     });
   });
