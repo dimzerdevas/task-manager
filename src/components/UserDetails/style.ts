@@ -13,6 +13,7 @@ export const UserDetailsContainer = styled.div`
       and (max-device-width: 480px)
       and (-webkit-min-device-pixel-ratio: 2) {
         flex-direction: column;
+        padding: 0;
     }
 `;
 
