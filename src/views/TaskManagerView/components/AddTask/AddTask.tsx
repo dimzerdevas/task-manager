@@ -2,12 +2,10 @@ import { TextField } from "@mui/material";
 import { TaskFilter } from "../TaskFilter";
 import { AddTaskContainer, StyledIconButton } from "./style";
 import { AddCircleOutline } from "@mui/icons-material";
-import { useContext } from "react";
-import { TaskContext } from "../../../../context";
+import { useTaskContext } from "../../../../context";
 
 export const AddTask = (): JSX.Element => {
-  const { filter, setFilter, newTask, setNewTask, addTask } =
-    useContext(TaskContext);
+  const { filter, setFilter, newTask, setNewTask, addTask } = useTaskContext();
   return (
     <AddTaskContainer>
       <TaskFilter filter={filter} setFilter={setFilter} />

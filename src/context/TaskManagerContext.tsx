@@ -1,4 +1,10 @@
-import { createContext, useState, ReactNode, useEffect } from "react";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useContext,
+} from "react";
 import { Task, TaskContextType } from "../views/TaskManagerView/interfaces";
 
 export const TaskContext = createContext<TaskContextType | null>(null);
@@ -124,4 +130,14 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
       {children}
     </TaskContext.Provider>
   );
+};
+
+export const useTaskContext = (): TaskContextType => {
+  const context = useContext(TaskContext);
+
+  if (!context) {
+    throw new Error("useTaskContext must be used within a Task Provider");
+  }
+
+  return context;
 };

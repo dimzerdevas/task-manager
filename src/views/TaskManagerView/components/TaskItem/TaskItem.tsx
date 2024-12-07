@@ -1,8 +1,7 @@
 import { ListItemText, TextField, IconButton, Checkbox } from "@mui/material";
 import { Edit, Delete, Save, DragIndicator } from "@mui/icons-material";
 import { StyledListItem } from "./style";
-import { useContext } from "react";
-import { TaskContext } from "../../../../context";
+import { useTaskContext } from "../../../../context";
 
 export const TaskItem = ({
   id,
@@ -15,7 +14,7 @@ export const TaskItem = ({
   isEditing: boolean;
   completed: boolean;
 }): JSX.Element => {
-  const {editTask, toggleEdit, deleteTask, toggleComplete} = useContext(TaskContext);
+  const { editTask, toggleEdit, deleteTask, toggleComplete } = useTaskContext();
 
   return (
     <StyledListItem

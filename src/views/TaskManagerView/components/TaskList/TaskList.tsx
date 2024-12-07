@@ -2,11 +2,10 @@ import { List } from "@mui/material";
 import { DragDropContext, Draggable, DropResult } from "react-beautiful-dnd";
 import { StrictModeDroppable } from "../../../../components/StrictModeDroppable";
 import { TaskItem } from "../TaskItem";
-import { useContext } from "react";
-import { TaskContext } from "../../../../context";
+import { useTaskContext } from "../../../../context";
 
 export const TaskList = (): JSX.Element => {
-  const { tasks, setTasks } = useContext(TaskContext);
+  const { tasks, setTasks } = useTaskContext();
 
   const handleDragDrop = (results: DropResult) => {
     const { source, destination, type } = results;
