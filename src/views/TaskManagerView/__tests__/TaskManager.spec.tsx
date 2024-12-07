@@ -10,9 +10,6 @@ import { TaskManagerView } from '../TaskManagerView';
 import { Providers } from '../../../test-helpers/Providers';
 import { createServer, Registry, Response, Server } from 'miragejs';
 import { AnyFactories, AnyModels } from 'miragejs/-types';
-// TODO: fix ts error
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import chuckNorrisResponseData from './data/chuck-norris-data.json';
 
 const chuckNorrisApiUrl = 'https://api.chucknorris.io/jokes/random';
