@@ -1,7 +1,12 @@
-import { TextField, List, IconButton, Button } from "@mui/material";
+import { TextField, List, Button, InputAdornment } from "@mui/material";
 import { TaskItem } from "./components";
-import { AddTaskContainer, Container } from "./style";
-import { AddCircleOutline } from "@mui/icons-material";
+import {
+  AddTaskContainer,
+  Container,
+  SearchTaskContainer,
+  StyledIconButton,
+} from "./style";
+import { AddCircleOutline, Search } from "@mui/icons-material";
 import { useTaskManager } from "../../context";
 import { TaskFilter } from "./components/TaskFilter";
 import { useChuckNorrisJoke } from "./queries";
@@ -10,10 +15,12 @@ import { useSnackbar } from "notistack";
 import { useEffect } from "react";
 import { DragDropContext, Draggable, DropResult } from "react-beautiful-dnd";
 import { StrictModeDroppable } from "../../components/StrictModeDroppable";
+import { SearchByFilter } from "./components/SearchFilter";
 
 export const TaskManagerView = () => {
   const {
     tasks,
+    setTasks,
     newTask,
     setNewTask,
     addTask,
@@ -23,7 +30,9 @@ export const TaskManagerView = () => {
     toggleComplete,
     filter,
     setFilter,
-    setTasks,
+    searchBy,
+    setSearchBy,
+    handleSearch,
   } = useTaskManager();
 
   const {
@@ -76,6 +85,25 @@ export const TaskManagerView = () => {
   return (
     <Container>
       {isLoadingChuckNorrisJoke && <Loader />}
+      <SearchTaskContainer>
+        <SearchByFilter searchBy={searchBy} setSearchBy={setSearchBy} />
+        <TextField
+          label="Search for Task"
+          variant="outlined"
+          fullWidth
+          onChange={handleSearch}
+          margin="normal"
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search />
+                </InputAdornment>
+              ),
+            },
+          }}
+        />
+      </SearchTaskContainer>
       <AddTaskContainer>
         <TaskFilter filter={filter} setFilter={setFilter} />
         <TextField
@@ -86,9 +114,9 @@ export const TaskManagerView = () => {
           onChange={(e) => setNewTask(e.target.value)}
           margin="normal"
         />
-        <IconButton onClick={addTask}>
+        <StyledIconButton onClick={addTask}>
           <AddCircleOutline />
-        </IconButton>
+        </StyledIconButton>
       </AddTaskContainer>
       <Button onClick={() => refetchChuckNorrisJoke()}>Bored?</Button>
       <DragDropContext onDragEnd={handleDragDrop}>

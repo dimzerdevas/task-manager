@@ -16,6 +16,10 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   const [newTask, setNewTask] = useState("");
   const [filter, setFilter] = useState<"all" | "done" | "pending">("all");
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
+  const [searchBy, setSearchBy] = useState<
+    "description" | "dueDate" | "priority"
+  >("description");
+  const [searchValue, setSearchValue] = useState<string>("");
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem("tasks") ?? "[]");
@@ -41,6 +45,20 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
         break;
     }
   }, [filter, tasks]);
+
+  useEffect(() => {
+    switch (searchBy) {
+      case "description":
+        console.log("des");
+        break;
+      case "dueDate":
+        console.log("date");
+        break;
+      case "priority":
+        console.log("pri");
+        break;
+    }
+  }, [searchBy]);
 
   const addTask = () => {
     if (newTask.trim() === "") return;
@@ -79,6 +97,18 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
     );
   };
 
+  const handleSearch = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const { value: searchInput } = event.target;
+
+    const searchResults = filteredTasks.filter((task) => {
+      const { text } = task;
+      return text.includes(searchInput);
+    });
+
+    // TODO: replace which searchedTasks
+    setFilteredTasks(searchResults);
+  };
+
   return (
     <TaskContext.Provider
       value={{
@@ -93,6 +123,11 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
         filter,
         setFilter,
         setTasks,
+        searchBy,
+        setSearchBy,
+        searchValue,
+        setSearchValue,
+        handleSearch,
       }}
     >
       {children}
@@ -100,6 +135,8 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
+// TODO: fix eslint configuration
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTaskManager = () => {
   const context = useContext(TaskContext);
   if (!context) {
