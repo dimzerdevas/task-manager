@@ -1,23 +1,28 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Button, Card, CardContent } from '@mui/material';
-import { SubtitleMessage, WelcomeMessage } from './style';
+import {
+  StyledButton,
+  StyledCard,
+  StyledCardContent,
+  SubtitleMessage,
+  WelcomeMessage,
+} from './style';
 
 export const LoginView = (): JSX.Element => {
   const { loginWithRedirect } = useAuth0();
 
   return (
-    <Card>
-      <CardContent>
+    <StyledCard>
+      <StyledCardContent>
         <WelcomeMessage>Welcome to the Task Manager App!</WelcomeMessage>
-        <SubtitleMessage>You need to login to continue</SubtitleMessage>
-        <Button
+        <StyledButton
           onClick={() => loginWithRedirect()}
           variant="contained"
           color="primary"
         >
           Login with SSO
-        </Button>
-      </CardContent>
-    </Card>
+        </StyledButton>
+        <SubtitleMessage>You need to login to continue</SubtitleMessage>
+      </StyledCardContent>
+    </StyledCard>
   );
 };
