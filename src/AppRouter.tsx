@@ -12,7 +12,7 @@ export const AppRouter = (): JSX.Element => {
     const { logout } = useAuth0();
     const { user, isAuthenticated, isLoading } = useAuth0();
 
-    const logoutUser = () => logout({ logoutParams: { returnTo: window.location.origin } });
+    const logoutUser = () => logout({ logoutParams: { returnTo: window.location.origin + '/task-manager/' } });
 
     if (isLoading) {
         return <Loader />;
