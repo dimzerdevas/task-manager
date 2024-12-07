@@ -1,17 +1,18 @@
 # Task Manager Application 
 
 This project is a Task Manager application built with React, Typescript and Vite. 
+
 👉 Deployed with GitHub Actions: https://dimzerdevas.github.io/task-manager/
 
 It includes features such as task creation, editing, deletion, marking a task as done and drag-and-drop functionality. Tasks data is stored and retrieved in local storage. User can filter tasks based on their completion status.
 
 ## Technologies used
 
-The application utilizes React Router functionality, the Context API for key features, integrates Material UI components with styled components and notistack for snackbar notifications. It also uses Auth0 for authentication.
+👉 The application utilizes React Router functionality, the Context API for key features, integrates Material UI components with styled components and notistack for snackbar notifications. It also uses Auth0 for authentication.
 
-Jest is used for unit testing, miragejs for mocking the API requests and react-testing-library for rendering components in the test environment. 
+👉 Jest is used for unit testing, miragejs for mocking the API requests and react-testing-library for rendering components in the test environment. 
 
-Prettier and eslint are used for code format.
+👉 Prettier and eslint are used for code format.
 
 ## Architectural Decisions
 
