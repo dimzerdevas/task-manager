@@ -1,9 +1,9 @@
-import { AppRouter } from "./AppRouter";
-import { ThemeProvider } from "./context/ThemeContext";
-import { Auth0Provider } from "@auth0/auth0-react";
-import { TaskProvider } from "./context";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SnackbarProvider } from "notistack";
+import { AppRouter } from './AppRouter';
+import { ThemeProvider } from './context/ThemeContext';
+import { Auth0Provider } from '@auth0/auth0-react';
+import { TaskProvider } from './context';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SnackbarProvider } from 'notistack';
 
 export const App = () => {
   const queryClient = new QueryClient({
@@ -20,7 +20,7 @@ export const App = () => {
         domain={import.meta.env.VITE_REACT_APP_DOMAIN}
         clientId={import.meta.env.VITE_REACT_APP_CLIENT_ID}
         authorizationParams={{
-          redirect_uri: window.location.origin + "/task-manager/",
+          redirect_uri: window.location.origin + '/task-manager/',
         }}
         useRefreshTokens={true}
         cacheLocation="localstorage"

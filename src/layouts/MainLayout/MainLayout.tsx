@@ -3,29 +3,29 @@ import {
   Router,
   AppProvider as ToolpadProvider,
   type NavigationItem,
-} from "@toolpad/core";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import { Outlet, useNavigate } from "react-router";
-import HomeIcon from "@mui/icons-material/Home";
-import { useState, useMemo } from "react";
-import { useTheme } from "@mui/material";
+} from '@toolpad/core';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Outlet, useNavigate } from 'react-router';
+import HomeIcon from '@mui/icons-material/Home';
+import { useState, useMemo } from 'react';
+import { useTheme } from '@mui/material';
 
 const NAVIGATION: NavigationItem[] = [
   {
-    segment: "",
-    title: "Home",
+    segment: '',
+    title: 'Home',
     icon: <HomeIcon />,
   },
   {
-    segment: "task-manager",
-    title: "Task Manager",
+    segment: 'task-manager',
+    title: 'Task Manager',
     icon: <AssignmentIcon />,
   },
 ];
 
 export const MainLayout = (): JSX.Element => {
   const theme = useTheme();
-  const [dashboardPathname, setDashboardPathname] = useState("/");
+  const [dashboardPathname, setDashboardPathname] = useState('/');
   const routeNavigate = useNavigate();
 
   const router = useMemo<Router>(
@@ -37,7 +37,7 @@ export const MainLayout = (): JSX.Element => {
         routeNavigate(path);
       },
     }),
-    [dashboardPathname, routeNavigate]
+    [dashboardPathname, routeNavigate],
   );
 
   return (
@@ -45,7 +45,7 @@ export const MainLayout = (): JSX.Element => {
       navigation={NAVIGATION}
       router={router}
       branding={{
-        title: "Task Manager App",
+        title: 'Task Manager App',
       }}
       theme={theme}
     >

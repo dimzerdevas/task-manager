@@ -1,7 +1,7 @@
-import { ListItemText, TextField, IconButton, Checkbox } from "@mui/material";
-import { Edit, Delete, Save, DragIndicator } from "@mui/icons-material";
-import { StyledListItem } from "./style";
-import { useTaskContext } from "../../../../context";
+import { ListItemText, TextField, IconButton, Checkbox } from '@mui/material';
+import { Edit, Delete, Save, DragIndicator } from '@mui/icons-material';
+import { StyledListItem } from './style';
+import { useTaskContext } from '../../../../context';
 
 export const TaskItem = ({
   id,
@@ -18,7 +18,7 @@ export const TaskItem = ({
 
   return (
     <StyledListItem
-      style={{ textDecoration: completed ? "line-through" : "none" }}
+      style={{ textDecoration: completed ? 'line-through' : 'none' }}
     >
       <DragIndicator />
       <Checkbox checked={completed} onChange={() => toggleComplete(id)} />

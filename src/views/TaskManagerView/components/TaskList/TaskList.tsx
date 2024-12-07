@@ -1,8 +1,8 @@
-import { List } from "@mui/material";
-import { DragDropContext, Draggable, DropResult } from "react-beautiful-dnd";
-import { StrictModeDroppable } from "../../../../components/StrictModeDroppable";
-import { TaskItem } from "../TaskItem";
-import { useTaskContext } from "../../../../context";
+import { List } from '@mui/material';
+import { DragDropContext, Draggable, DropResult } from 'react-beautiful-dnd';
+import { StrictModeDroppable } from '../../../../components/StrictModeDroppable';
+import { TaskItem } from '../TaskItem';
+import { useTaskContext } from '../../../../context';
 
 export const TaskList = (): JSX.Element => {
   const { tasks, setTasks } = useTaskContext();
@@ -17,7 +17,7 @@ export const TaskList = (): JSX.Element => {
     )
       return;
 
-    if (type === "group") {
+    if (type === 'group') {
       const reOrderedTasks = structuredClone(tasks);
       const sourceIndex = source.index;
       const destinationIndex = destination.index;

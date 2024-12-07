@@ -1,5 +1,5 @@
-import { User } from "@auth0/auth0-react";
-import { Button, IconButton } from "@mui/material";
+import { User } from '@auth0/auth0-react';
+import { Button, IconButton } from '@mui/material';
 import {
   HighlightedText,
   LoggedMessage,
@@ -8,10 +8,10 @@ import {
   RightSide,
   ProfilePicture,
   WelcomeMessage,
-} from "./style";
+} from './style';
 // import { useThemeContext } from "../../context/ThemeContext";
-import { ModeNight, LightMode } from "@mui/icons-material";
-import { useThemeContext } from "../../context/ThemeContext";
+import { ModeNight, LightMode } from '@mui/icons-material';
+import { useThemeContext } from '../../context/ThemeContext';
 
 interface UserDetailsProps {
   user: User | undefined;
@@ -22,7 +22,7 @@ export const UserDetails = ({ user, logout }: UserDetailsProps) => {
   const { name, picture, email } = user || {};
   const { toggleTheme, theme } = useThemeContext();
 
-  const isDarkMode = theme.palette.mode === "dark";
+  const isDarkMode = theme.palette.mode === 'dark';
 
   return (
     <UserDetailsContainer>

@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SearchTaskContainer = styled.div`
-    display: flex;
-    align-items: baseline;
-`
+  display: flex;
+  align-items: baseline;
+`;

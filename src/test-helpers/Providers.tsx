@@ -1,7 +1,7 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TaskProvider } from "../context";
-import { ThemeProvider } from "../context/ThemeContext";
-import { SnackbarProvider } from "notistack";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { TaskProvider } from '../context';
+import { ThemeProvider } from '../context/ThemeContext';
+import { SnackbarProvider } from 'notistack';
 
 export const Providers = ({
   children,

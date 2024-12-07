@@ -1,12 +1,12 @@
-import { Button } from "@mui/material";
-import { Container } from "./style";
-import { useChuckNorrisJoke } from "./queries";
-import { Loader } from "../../components";
-import { useSnackbar } from "notistack";
-import { useEffect } from "react";
-import { TaskList } from "./components/TaskList";
-import { AddTask } from "./components/AddTask";
-import { SearchTask } from "./components/SearchTask";
+import { Button } from '@mui/material';
+import { Container } from './style';
+import { useChuckNorrisJoke } from './queries';
+import { Loader } from '../../components';
+import { useSnackbar } from 'notistack';
+import { useEffect } from 'react';
+import { TaskList } from './components/TaskList';
+import { AddTask } from './components/AddTask';
+import { SearchTask } from './components/SearchTask';
 
 export const TaskManagerView = () => {
   const {
@@ -21,15 +21,15 @@ export const TaskManagerView = () => {
   useEffect(() => {
     if (chuckNorrisJoke) {
       enqueueSnackbar(chuckNorrisJoke, {
-        variant: "success",
+        variant: 'success',
         autoHideDuration: 5000,
-        anchorOrigin: { vertical: "bottom", horizontal: "right" },
+        anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
       });
     } else if (isErrorChuckNorrisJoke) {
-      enqueueSnackbar("Error while fetching Chuck Norris joke", {
-        variant: "error",
+      enqueueSnackbar('Error while fetching Chuck Norris joke', {
+        variant: 'error',
         autoHideDuration: 5000,
-        anchorOrigin: { vertical: "bottom", horizontal: "right" },
+        anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
       });
     }
   }, [chuckNorrisJoke, enqueueSnackbar, isErrorChuckNorrisJoke]);

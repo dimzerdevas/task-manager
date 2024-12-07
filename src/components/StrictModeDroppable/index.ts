@@ -1,1 +1,1 @@
-export * from './StrictModeDroppable'
+export * from './StrictModeDroppable';
