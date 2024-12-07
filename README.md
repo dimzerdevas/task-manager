@@ -1,50 +1,31 @@
-# React + TypeScript + Vite
+# Task Manager Application 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a Task Manager application built with React, Typescript and Vite. 
 
-Currently, two official plugins are available:
+It includes features such as task creation, editing, deletion, marking a task as done and drag-and-drop functionality. Tasks data is stored and retrieved in local storage. User can filter tasks based on their completion status.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies used
 
-## Expanding the ESLint configuration
+The application utilizes React Router functionality, the Context API for key features, integrates Material UI components with styled components and notistack for snackbar notifications. It also uses Auth0 for authentication.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Jest is used for unit testing, miragejs for mocking the API requests and react-testing-library for rendering components in the test environment. 
 
-- Configure the top-level `parserOptions` property like this:
+Prettier and eslint are used for code format.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+## Architectural Decisions
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+The application is split in views per route/page. Common components, hooks and layouts are in the src root of the app.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react';
+## Setup and Run the Project Locally 
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-});
-```
+- Clone the repo `git clone https://github.com/dimzerdevas/task-manager`
+- Change directory to project's root `cd task-manager`
+- Install dependencies `npm install`
+- Run the application `npm run dev`
+
+Important note: 
+- To access the main application you will need to login. 
+- In order for `auth0` provider to work, you will need to create an `.env` following the format of `.env.sample`(read more: https://auth0.com/docs/quickstart/spa/react/interactive) 
+
+## Considerations 
+- React Beautiful DnD is deprecated and should be viewed as a tech debt.
