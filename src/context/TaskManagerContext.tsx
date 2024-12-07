@@ -1,13 +1,7 @@
-import {
-  createContext,
-  useState,
-  useContext,
-  ReactNode,
-  useEffect,
-} from "react";
+import { createContext, useState, ReactNode, useEffect } from "react";
 import { Task, TaskContextType } from "../views/TaskManagerView/interfaces";
 
-const TaskContext = createContext<TaskContextType | undefined>(undefined);
+export const TaskContext = createContext<TaskContextType | null>(null);
 
 export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -16,10 +10,11 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   const [newTask, setNewTask] = useState("");
   const [filter, setFilter] = useState<"all" | "done" | "pending">("all");
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
+  const [searchedTasks, setSearchedTasks] = useState<Task[]>([]);
   const [searchBy, setSearchBy] = useState<
     "description" | "dueDate" | "priority"
   >("description");
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem("tasks") ?? "[]");
@@ -97,16 +92,13 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
     );
   };
 
-  const handleSearch = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const { value: searchInput } = event.target;
-
+  const handleSearch = (searchValue: string) => {
     const searchResults = filteredTasks.filter((task) => {
       const { text } = task;
-      return text.includes(searchInput);
+      return text.includes(searchValue);
     });
 
-    // TODO: replace which searchedTasks
-    setFilteredTasks(searchResults);
+    setSearchedTasks(searchResults);
   };
 
   return (
@@ -117,7 +109,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
         deleteTask,
         toggleEdit,
         toggleComplete,
-        tasks: filteredTasks,
+        tasks: !isSearching ? filteredTasks : searchedTasks,
         newTask,
         setNewTask,
         filter,
@@ -125,22 +117,11 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
         setTasks,
         searchBy,
         setSearchBy,
-        searchValue,
-        setSearchValue,
         handleSearch,
+        setIsSearching,
       }}
     >
       {children}
     </TaskContext.Provider>
   );
-};
-
-// TODO: fix eslint configuration
-// eslint-disable-next-line react-refresh/only-export-components
-export const useTaskManager = () => {
-  const context = useContext(TaskContext);
-  if (!context) {
-    throw new Error("useTasks must be used within a TaskProvider");
-  }
-  return context;
 };

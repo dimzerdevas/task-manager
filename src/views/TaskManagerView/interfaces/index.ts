@@ -19,7 +19,6 @@ export interface TaskContextType {
     setTasks: (tasks: Task[]) => void;
     searchBy: 'description' | 'dueDate' | 'priority';
     setSearchBy: (filter: 'description' | 'dueDate' | 'priority') => void;
-    searchValue: string;
-    setSearchValue: (value: string) => void;
-    handleSearch: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+    handleSearch: (searchValue: string) => void;
+    setIsSearching: (value: boolean) => void;
 }
