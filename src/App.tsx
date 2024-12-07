@@ -20,7 +20,7 @@ export const App = () => {
         domain={import.meta.env.VITE_REACT_APP_DOMAIN}
         clientId={import.meta.env.VITE_REACT_APP_CLIENT_ID}
         authorizationParams={{
-          redirect_uri: window.location.origin,
+          redirect_uri: window.location.origin + "/task-manager/",
         }}
         useRefreshTokens={true}
         cacheLocation="localstorage"
