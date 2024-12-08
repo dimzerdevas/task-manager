@@ -1,4 +1,4 @@
-import { DateField, LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { useTaskContext } from '../../../../../../context';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from 'moment';
@@ -26,18 +26,18 @@ export const EditedTask = ({
           error={text.length === 0}
           helperText={text.length === 0 ? 'This field cannot be empty' : ''}
         />
-        <LocalizationProvider dateAdapter={AdapterMoment}>
-          <DateField
-            label="Due Date"
-            value={moment(dueDate)}
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="en-gb">
+          <DatePicker
+            label="Controlled picker"
+            value={moment(dueDate, 'DD/MM/YYYY')}
             format="DD/MM/YYYY"
-            onChange={(e) =>
+            onChange={(e) => {
               editTask({
                 id,
                 updatedValue: moment(e).format('DD/MM/YYYY'),
                 field: 'dueDate',
-              })
-            }
+              });
+            }}
           />
         </LocalizationProvider>
       </TaskDisplayed>
