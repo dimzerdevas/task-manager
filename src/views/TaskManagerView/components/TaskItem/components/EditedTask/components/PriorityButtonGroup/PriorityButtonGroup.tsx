@@ -1,7 +1,7 @@
 import { Button, ButtonGroup } from '@mui/material';
-import { PriorityEnum } from '../../../../interfaces';
-import { useTaskContext } from '../../../../../../context';
-import { useIsMobile } from '../../../../../../hooks';
+import { useTaskContext } from '../../../../../../../../context';
+import { useIsMobile } from '../../../../../../../../hooks';
+import { PriorityEnum } from '../../../../../../interfaces';
 
 export const PriorityButtonGroup = ({
   id,

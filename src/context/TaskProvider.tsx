@@ -143,7 +143,9 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   const toggleEdit = (id: number) => {
     setTasks(
       tasks.map((task) =>
-        task.id === id ? { ...task, isEditing: !task.isEditing } : task,
+        task.id === id && task.text.length !== 0
+          ? { ...task, isEditing: !task.isEditing }
+          : task,
       ),
     );
   };
