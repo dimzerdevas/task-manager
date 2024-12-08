@@ -10,8 +10,16 @@ import { TaskManagerView } from '../TaskManagerView';
 import { Providers } from '../../../test-helpers/Providers';
 import { createServer, Registry, Response, Server } from 'miragejs';
 import { AnyFactories, AnyModels } from 'miragejs/-types';
-import chuckNorrisResponseData from './data/chuck-norris-data.json';
 
+const chuckNorrisResponseData = {
+  categories: [],
+  created_at: '2020-01-05 13:42:21.455187',
+  icon_url: 'https://api.chucknorris.io/img/avatar/chuck-norris.png',
+  id: 'Nuis8HGtTvu0pqA8eNqILA',
+  updated_at: '2020-01-05 13:42:21.455187',
+  url: 'https://api.chucknorris.io/jokes/Nuis8HGtTvu0pqA8eNqILA',
+  value: 'Chuck Norris can implode an explosion making it explode some more.',
+};
 const chuckNorrisApiUrl = 'https://api.chucknorris.io/jokes/random';
 
 const mockEnqueue = jest.fn();
@@ -51,7 +59,7 @@ describe('TaskManagerView', () => {
     );
   });
 
-  it('does not add text task', () => {
+  it('does not add empty text task', () => {
     render(
       <Providers>
         <TaskManagerView />
@@ -72,7 +80,7 @@ describe('TaskManagerView', () => {
     fireEvent.click(addBtn);
     expect(screen.queryByText(' ')).not.toBeInTheDocument();
   });
-  it('adds task successfully', () => {
+  it('adds task successfully', async () => {
     render(
       <Providers>
         <TaskManagerView />
@@ -92,13 +100,14 @@ describe('TaskManagerView', () => {
 
     fireEvent.click(addBtn);
 
-    expect(screen.getByText(/something to do/i)).toBeInTheDocument();
+    const taskText = await screen.findByText(/something to do/i);
+    expect(taskText).toBeInTheDocument();
 
     // TODO: fix clean up
     const deleteBtn = screen.getByTestId('DeleteIcon');
     fireEvent.click(deleteBtn);
   });
-  it('deletes task successfully', () => {
+  it('deletes task successfully', async () => {
     render(
       <Providers>
         <TaskManagerView />
@@ -118,14 +127,14 @@ describe('TaskManagerView', () => {
 
     fireEvent.click(addBtn);
 
-    expect(screen.getByText(/something to do/i)).toBeInTheDocument();
+    expect(await screen.findByText(/something to do/i)).toBeInTheDocument();
 
     const deleteBtn = screen.getByTestId('DeleteIcon');
     fireEvent.click(deleteBtn);
 
     expect(screen.queryByText(/something to do/i)).not.toBeInTheDocument();
   });
-  it('edits task successfully', () => {
+  it('edits task successfully', async () => {
     render(
       <Providers>
         <TaskManagerView />
@@ -144,7 +153,7 @@ describe('TaskManagerView', () => {
     });
 
     fireEvent.click(addBtn);
-    expect(screen.getByText(/something to do/i)).toBeInTheDocument();
+    expect(await screen.findByText(/something to do/i)).toBeInTheDocument();
 
     const editBtn = screen.getByTestId('EditIcon');
     fireEvent.click(editBtn);
@@ -185,7 +194,7 @@ describe('TaskManagerView', () => {
 
     fireEvent.click(addBtn);
 
-    expect(screen.getByText(/something to do/i)).toBeInTheDocument();
+    expect(await screen.findByText(/something to do/i)).toBeInTheDocument();
 
     const checkbox = screen.getByRole('checkbox');
     fireEvent.click(checkbox);
