@@ -1,43 +1,50 @@
-import { ListItemText, TextField, IconButton, Checkbox } from '@mui/material';
+import { IconButton, Checkbox } from '@mui/material';
 import { Edit, Delete, Save, DragIndicator } from '@mui/icons-material';
-import { StyledListItem } from './style';
+import { Actions, Controls, StyledListItem } from './style';
 import { useTaskContext } from '../../../../context';
+import { Task } from '../../interfaces';
+import { DisplayedTask, EditedTask } from './components';
+import { useIsMobile } from '../../../../hooks';
 
 export const TaskItem = ({
   id,
   text,
   isEditing,
   completed,
-}: {
-  text: string;
-  id: number;
-  isEditing: boolean;
-  completed: boolean;
-}): JSX.Element => {
-  const { editTask, toggleEdit, deleteTask, toggleComplete } = useTaskContext();
+  dueDate,
+  priority,
+}: Pick<
+  Task,
+  'id' | 'text' | 'isEditing' | 'completed' | 'dueDate' | 'priority'
+>): JSX.Element => {
+  const { toggleEdit, deleteTask, toggleComplete } = useTaskContext();
+  const isMobile = useIsMobile();
 
   return (
     <StyledListItem
-      style={{ textDecoration: completed ? 'line-through' : 'none' }}
+      style={{
+        textDecoration: completed ? 'line-through' : 'none',
+        padding: isMobile ? '10px 5px' : '10px',
+        justifyContent: 'space-between',
+      }}
     >
-      <DragIndicator />
-      <Checkbox checked={completed} onChange={() => toggleComplete(id)} />
+      <Controls>
+        <DragIndicator />
+        <Checkbox checked={completed} onChange={() => toggleComplete(id)} />
+      </Controls>
       {isEditing ? (
-        <TextField
-          value={text}
-          data-testId={`edit-field-${text}`}
-          onChange={(e) => editTask(id, e.target.value)}
-          fullWidth
-        />
+        <EditedTask id={id} text={text} dueDate={dueDate} priority={priority} />
       ) : (
-        <ListItemText primary={text} />
+        <DisplayedTask text={text} dueDate={dueDate} priority={priority} />
       )}
-      <IconButton onClick={() => toggleEdit(id)}>
-        {isEditing ? <Save /> : <Edit />}
-      </IconButton>
-      <IconButton onClick={() => deleteTask(id)}>
-        <Delete />
-      </IconButton>
+      <Actions>
+        <IconButton onClick={() => toggleEdit(id)}>
+          {isEditing ? <Save /> : <Edit />}
+        </IconButton>
+        <IconButton onClick={() => deleteTask(id)}>
+          <Delete />
+        </IconButton>
+      </Actions>
     </StyledListItem>
   );
 };

@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { CHUCK_NORRIS_JOKE_QUERY } from './constants';
+import { useAlerts } from '../../../hooks';
+import { useEffect } from 'react';
 
 const fetchRandomChuckNorrisJoke = async () => {
   const response = await fetch('https://api.chucknorris.io/jokes/random');
@@ -21,6 +23,18 @@ export const useChuckNorrisJoke = () => {
     enabled: false,
     retry: false,
   });
+
+  const { successAlert, errorAlert } = useAlerts();
+
+  const { value: chuckNorrisJoke } = data || {};
+
+  useEffect(() => {
+    if (chuckNorrisJoke) {
+      successAlert(chuckNorrisJoke);
+    } else if (isErrorChuckNorrisJoke) {
+      errorAlert('Error while fetching Chuck Norris joke');
+    }
+  }, [chuckNorrisJoke, errorAlert, isErrorChuckNorrisJoke, successAlert]);
 
   return {
     chuckNorrisJoke: data?.value,
