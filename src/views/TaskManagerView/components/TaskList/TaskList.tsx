@@ -35,29 +35,36 @@ export const TaskList = (): JSX.Element => {
         <StrictModeDroppable droppableId="ROOT" type="group">
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
-              {tasks.map(({ isEditing, text, id, completed }, index) => (
-                <Draggable
-                  draggableId={String(id + index)}
-                  key={id}
-                  index={index}
-                >
-                  {(provided) => (
-                    <div
-                      {...provided.dragHandleProps}
-                      {...provided.draggableProps}
-                      ref={provided.innerRef}
-                    >
-                      <TaskItem
-                        isEditing={isEditing}
-                        text={text}
-                        completed={completed}
-                        key={id}
-                        id={id}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
+              {tasks.map(
+                (
+                  { isEditing, text, id, completed, dueDate, priority },
+                  index,
+                ) => (
+                  <Draggable
+                    draggableId={String(id + index)}
+                    key={id}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        {...provided.dragHandleProps}
+                        {...provided.draggableProps}
+                        ref={provided.innerRef}
+                      >
+                        <TaskItem
+                          isEditing={isEditing}
+                          text={text}
+                          completed={completed}
+                          dueDate={dueDate}
+                          priority={priority}
+                          key={id}
+                          id={id}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ),
+              )}
             </div>
           )}
         </StrictModeDroppable>

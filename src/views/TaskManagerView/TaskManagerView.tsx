@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { Container } from './style';
+import { Container, FilterAndAddTaskContainer } from './style';
 import { useChuckNorrisJoke } from './queries';
 import { Loader } from '../../components';
 import { useSnackbar } from 'notistack';
@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { TaskList } from './components/TaskList';
 import { AddTask } from './components/AddTask';
 import { SearchTask } from './components/SearchTask';
+import { TaskFilter } from './components/TaskFilter';
 
 export const TaskManagerView = () => {
   const {
@@ -38,7 +39,10 @@ export const TaskManagerView = () => {
     <Container>
       {isLoadingChuckNorrisJoke && <Loader />}
       <SearchTask />
-      <AddTask />
+      <FilterAndAddTaskContainer>
+        <TaskFilter />
+        <AddTask />
+      </FilterAndAddTaskContainer>
       <Button onClick={() => refetchChuckNorrisJoke()}>Bored?</Button>
       <TaskList />
     </Container>
