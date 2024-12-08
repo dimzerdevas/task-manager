@@ -1,6 +1,7 @@
 import { Button, ButtonGroup } from '@mui/material';
 import { PriorityEnum } from '../../../../interfaces';
 import { useTaskContext } from '../../../../../../context';
+import { useIsMobile } from '../../../../../../hooks';
 
 export const PriorityButtonGroup = ({
   id,
@@ -10,8 +11,13 @@ export const PriorityButtonGroup = ({
   priority: 'low' | 'medium' | 'high';
 }) => {
   const { editTask } = useTaskContext();
+  const isMobile = useIsMobile();
   return (
-    <ButtonGroup variant="text" aria-label="Basic button group">
+    <ButtonGroup
+      variant="text"
+      orientation={isMobile ? 'vertical' : 'horizontal'}
+      aria-label="Edit Priority of task button group"
+    >
       <Button
         color="success"
         variant={priority === PriorityEnum.low ? 'outlined' : 'text'}

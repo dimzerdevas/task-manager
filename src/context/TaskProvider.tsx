@@ -110,7 +110,6 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
     updatedValue: string | PriorityType;
     field: string;
   }): void => {
-    console.log('field');
     switch (field) {
       case 'text':
         setTasks(
@@ -127,7 +126,6 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
         );
         break;
       case 'priority':
-        console.log('HERE___', updatedValue);
         setTasks(
           tasks.map((task) =>
             task.id === id
